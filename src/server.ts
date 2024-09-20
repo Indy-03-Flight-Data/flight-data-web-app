@@ -12,6 +12,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/api/test', async (req: Request, res: Response) => {
   try {
+    res.send('Hello, PostgreSQL here!');
     const result = await pool.query('SELECT NOW()');
     res.json(result.rows);
   } catch (err) {
