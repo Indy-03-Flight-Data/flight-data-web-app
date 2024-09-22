@@ -1,36 +1,23 @@
-import { Client } from 'pg';
-import fs from 'fs';
+import { exec } from 'child_process';
 import path from 'path';
 
-// Create a PostgreSQL client
-const client = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'flight_data',
-  password: 'Coral',
-  port: 5432,
-});
+const loadCsvToDatabase = () => {
+  const csvFilePath = path.join(__dirname, '../data/airports.csv');
+  console.log(`Loading CSV from path: ${csvFilePath}`);
 
-const loadCsvToDatabase = async () => {
-  try {
-    await client.connect();
+  const copyCommand = `psql -U your_username -d your_database_name -c "\\copy airports(id, ident, type, name, latitude_deg, longitude_deg, elevation_ft, continent, iso_country, iso_region, municipality, scheduled_service, gps_code, iata_code, local_code, home_link, wikipedia_link, keywords) FROM '${csvFilePath}' DELIMITER ',' CSV HEADER"`;
 
-    const csvFilePath = path.join(__dirname, '../data/airports.csv');
-    
-    const query = `
-      COPY airports(name, city, state, iata_code, icao_code, latitude, longitude)
-      FROM '${csvFilePath}'
-      DELIMITER ','
-      CSV HEADER;
-    `;
-
-    await client.query(query);
-    console.log('Data loaded successfully');
-  } catch (err) {
-    console.error('Error loading CSV to database:', err);
-  } finally {
-    await client.end();
-  }
+  exec(copyCommand, (error, stdout, stderr) => {
+    if (error) {
+      console.error('Error loading CSV to database:', error.message);
+      return;
+    }
+    if (stderr) {
+      console.error('stderr:', stderr);
+      return;
+    }
+    console.log('stdout:', stdout);
+  });
 };
 
 loadCsvToDatabase();

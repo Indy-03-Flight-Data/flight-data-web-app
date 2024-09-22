@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import pool from "../db";  // Assuming you have a pool setup for PostgreSQL
+import pool from "../db";
 
 // Search for airports based on input query (name or IATA code)
 const searchAirports = async (req: Request, res: Response) => {
