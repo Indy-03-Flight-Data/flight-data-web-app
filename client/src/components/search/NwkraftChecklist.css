@@ -1,0 +1,11 @@
+.checklist{
+    list-style-type: none;
+    text-align: left;
+}
+
+.item{
+    padding:10px;
+    margin: 10px 0;
+    background-color: gray;
+    border-radius: 10px;
+}
