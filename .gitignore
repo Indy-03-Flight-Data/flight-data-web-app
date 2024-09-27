@@ -14,6 +14,7 @@ client/build/
 
 # Environment variables
 .env
+apiKey.env
 
 # OS-specific files
 .DS_Store  # macOS
