@@ -13,8 +13,7 @@ client/node_modules/
 client/build/
 
 # Environment variables
-.env
-apiKey.env
+*.env
 
 # OS-specific files
 .DS_Store  # macOS
